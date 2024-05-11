@@ -29,6 +29,9 @@ namespace P1AFormNaser
             //MessageBox.Show("Hola mi guapo");
         }
 
+        private int intentosFallidos = 0;
+        private const int maximoIntentos = 3;
+
         private void ingreso_Click(object sender, EventArgs e)
         {
             if (textBoxusr.Text.ToUpper().Equals("ADMIN") && textBoxpassword.Text.ToUpper().Equals("ADMIN"))
@@ -38,9 +41,20 @@ namespace P1AFormNaser
             }
             else
             {
-                MessageBox.Show("Usuario o contrase;a incorrecta");
-                textBoxusr.Clear();
-                textBoxpassword.Clear();
+                intentosFallidos++;
+
+                // Verificar si se alcanzó el límite de intentos fallidos
+                if (intentosFallidos >= maximoIntentos)
+                {
+                    MessageBox.Show("Has excedido el número máximo de intentos fallidos. El botón de ingreso será desactivado.");
+                    ingreso.Enabled = false; // Desactivar el botón
+                }
+                else
+                {
+                    MessageBox.Show("Usuario o contraseña incorrecta");
+                    textBoxusr.Clear();
+                    textBoxpassword.Clear();
+                }
             }
         }
 
